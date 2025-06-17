@@ -200,3 +200,12 @@
         text-align: left;
     }
 }
+
+
+@media (print) {
+    .plt {
+        padding: 0.35em 1rem;
+        margin: 0.25em 0;
+        line-height: 1.6;
+    }
+}
