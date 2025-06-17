@@ -5,13 +5,30 @@ const navBtnImg = document.querySelector('#nav-btn-img');
 navBtn.onclick = () => {
     if (nav.classList.toggle('open')) {
         navBtnImg.src = "./img/icons/nav-close.svg";
+        document.body.style.overflow = 'hidden'; // Блокируем скролл при открытом меню
     } else {
         navBtnImg.src = './img/icons/nav-open.svg';
+        document.body.style.overflow = 'auto'; // Разблокируем скролл
     }
 }
 
+// Закрытие меню при клике на ссылку (для мобильных)
+document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+        if (nav.classList.contains('open')) {
+            nav.classList.remove('open');
+            navBtnImg.src = './img/icons/nav-open.svg';
+            document.body.style.overflow = 'auto';
+        }
+    });
+});
+
 // Инициализация AOS анимаций
-AOS.init();
+AOS.init({
+    duration: 800,
+    once: true,
+    offset: 100
+});
 
 // Функция плавного скролла для всех ссылок с якорями
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -47,4 +64,12 @@ window.addEventListener('scroll', () => {
             link.classList.add('active');
         }
     });
+});
+
+// Обработка изменения размера окна для адаптивности изображения
+window.addEventListener('resize', () => {
+    const heroImage = document.querySelector('.hero-image');
+    if (heroImage && window.innerWidth <= 700) {
+        heroImage.style.objectPosition = 'center';
+    }
 });
