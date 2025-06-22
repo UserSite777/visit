@@ -22,6 +22,7 @@ body {
     font-size: 34px;
     font-weight: 600;
     text-align: center;
+    color: #000;
 }
 
 .btn {
@@ -68,6 +69,7 @@ body {
     font-size: 32px;
     line-height: 1;
     color: #000;
+    text-decoration: none;
 }
 
 .logo::after {
@@ -96,6 +98,7 @@ body {
 
 .nav-link {
     color: #000;
+    text-decoration: none;
     transition: color 0.2s ease;
 }
 
@@ -124,8 +127,9 @@ body {
 .header-heading {
     margin-bottom: 20px;
     font-weight: 600;
-    font-size: 44px;
+    font-size: 28px;
     text-align: center;
+    color: #000;
 }
 
 .header-content p {
@@ -207,6 +211,7 @@ body {
     font-size: 24px;
     text-transform: uppercase;
     text-align: center;
+    color: #000;
 }
 
 .service-card p {
@@ -238,13 +243,13 @@ body {
 }
 
 .project-title {
-    font-size: 18px;
+    font-size: 24px;
     text-align: center;
+    color: #000;
 }
 
 .project-title a {
     color: #000;
-    text-decoration: underline;
 }
 
 /* About Section */
@@ -330,13 +335,6 @@ body {
     margin-top: 1em;
 }
 
-.contact-link {
-    color: #FDA300;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s ease;
-}
-
 .contact-link:hover {
     color: #e89300;
     text-decoration: underline;
@@ -361,4 +359,108 @@ body {
 .plt {
     color: black;
     font-size: 20px;
+}
+
+/* Стили для контактной кнопки WhatsApp */
+.contact-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    border-radius: 24px;
+}
+
+.whatsapp-link {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.whatsapp-icon {
+    width: 38px;
+    height: auto;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.whatsapp-overlay {
+    padding: 4px;
+    border: 2px solid white;
+    position: relative;
+}
+
+/* Blog специальные стили */
+.blog-header {
+    min-height: 50vh;
+    padding-bottom: 40px;
+}
+
+.blog-header .header-nav {
+    margin-bottom: 40px;
+}
+
+.blog-header-content {
+    max-width: 100%;
+    margin: 0 auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* Blog */
+.blog {
+    padding: 60px 0;
+    background-color: #fff;
+}
+
+.blog-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.blog-article {
+    background-color: #F1F1F1;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.blog-heading {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    text-align: center;
+    color: #000;
+}
+
+.blog-content p {
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: left;
+}
+
+.blog-list {
+    list-style: none;
+    padding: 0;
+    margin: 25px 0;
+}
+
+.blog-list li {
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 15px;
+    padding-left: 25px;
+    position: relative;
+    color: #333;
+}
+
+.blog-list li::before {
+    content: "•";
+    color: #FDA300;
+    font-weight: bold;
+    position: absolute;
+    left: 0;
 }

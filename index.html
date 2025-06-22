@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,7 +16,6 @@
             <!-- Header nav -->
             <div class="header-nav">
                 <a href="#!" class="logo">ВизитКа</a>
-
                 <nav id="nav" class="nav">
                     <ul class="nav-list">
                         <li class="nav-item"><a href="#header" class="nav-link active">Главная</a></li>
@@ -24,20 +23,19 @@
                         <li class="nav-item"><a href="#portfolio" class="nav-link">Портфолио</a></li>
                         <li class="nav-item"><a href="#about" class="nav-link">О нас</a></li>
                         <li class="nav-item"><a href="#contacts" class="nav-link">Контакты</a></li>
+                        <li class="nav-item"><a href="blog.html" class="nav-link">IT блог</a></li>
                     </ul>
-                    <button id="nav-btn" class="nav-button">
-                        <img id="nav-btn-img" src="./img/icons/nav-open.svg" alt="Nav button">
-                    </button>
+                        <button id="nav-btn" class="nav-button">
+                            <img id="nav-btn-img" src="./img/icons/nav-open.svg" alt="Nav button">
+                        </button>
                 </nav>
             </div>
-
             <!-- Header content -->
             <div class="header-row">
                 <div class="header-content" data-aos="fade-up">
-                    <h1 class="header-heading">Вайб-кодинг<br> <span>Веб-дизайн & Апдейт БД</span></h1>
+                    <h1 class="header-heading">Вайб-кодинг<br> <span>Вебдизайн & Апдейт БД</span></h1>
                     <p>Добро пожаловать на страничку  вайб-кодера Тимура</p>
                 </div>
-
                 <div class="header-img" data-aos="fade-left">
                     <picture>
                         <source media="(max-width: 799px)" srcset="./img/header/hero-mobile.png">
@@ -45,7 +43,6 @@
                     </picture>
                 </div>
             </div>
-            
             <!-- Кнопка скролла вниз -->
             <div class="scroll-down">
                 <a href="#services" class="scroll-btn">
@@ -89,17 +86,17 @@
             </div>
 
             <div class="project" data-aos="flip-up">
-                <img src="./img/portfolio/01.jpg" alt="Online fashion store" class="project-img">
+                <img src="./img/portfolio/01.jpg" alt="Сертификация" class="project-img">
                 <h3 class="project-title">IT компетенция 2025</h3>
             </div>
 
             <div class="project" data-aos="flip-up">
-                <img src="./img/portfolio/02.jpg" alt="Reebok Store" class="project-img">
+                <img src="./img/portfolio/02.jpg" alt="Аксцесс БД" class="project-img">
                 <h3 class="project-title">Учет продукции с помощью MS Access</h3>
             </div>
 
-            <div class="project" data-aos="flip-up">
-                <img src="./img/portfolio/03.jpg" alt="Braun Landing Page" class="project-img">
+            <div class="project" data-aos="flip-up" onclick="window.location.href='https://kotanstudio.tilda.ws/'">
+                <img src="./img/portfolio/03.jpg" alt="Проектирование на Тильда" class="project-img">
                 <h3 class="project-title">Разработка лэндингов на движке Tilda</h3>
             </div>
         </div>
@@ -138,12 +135,19 @@
             <div class="contacts-title">
                 <h2 class="title-1">Контакты</h2>
             </div>
+
             <div class="contacts-content" data-aos="fade-down">
-                <p>Если заинтересовала  информация пишите в телеграм на сайте:<br> 
-                <a href="https://kotanstudio.tilda.ws/" target="_blank" class="contact-link">https://kotanstudio.tilda.ws/</a></p>
+                <p>Пишите в whatsapp:</p>
+                <div class="contact-link">
+                    <a href="https://wa.me/79093082242" class="whatsapp-link">
+                        <img src="img/icons/watsap.svg" alt="WatsApp" class="whatsapp-icon">
+                        <div class="whatsapp-overlay"></div>
+                    </a>
+                </div>
             </div>
+
             <div class="contacts-button" data-aos="fade-down">
-                <a href="./privacy-policy.pdf" target="_blank" class="plt">Политика конфиденциальности</a>  <!-- class="btn" -->
+                <a href="./privacy-policy.pdf" target="_blank" class="plt">Политика конфиденциальности</a>
             </div>
             
             <!-- Кнопка скролла вверх -->
