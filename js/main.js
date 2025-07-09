@@ -1,152 +1,77 @@
-const nav = document.querySelector('#nav');
-const navBtn = document.querySelector('#nav-btn');
-const navBtnImg = document.querySelector('#nav-btn-img');
+// main.js — Полный код cookie-уведомления с обязательным согласием и блокировкой сайта
 
-navBtn.onclick = () => {
-    if (nav.classList.toggle('open')) {
-        navBtnImg.src = "./img/icons/nav-close.svg";
-        document.body.style.overflow = 'hidden'; // Блокируем скролл при открытом меню
-    } else {
-        navBtnImg.src = './img/icons/nav-open.svg';
-        document.body.style.overflow = 'auto'; // Разблокируем скролл
-    }
-}
-
-// Закрытие меню при клике на ссылку (для мобильных)
-document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', () => {
-        if (nav.classList.contains('open')) {
-            nav.classList.remove('open');
-            navBtnImg.src = './img/icons/nav-open.svg';
-            document.body.style.overflow = 'auto';
-        }
-    });
-});
-
-// Инициализация AOS анимаций
-AOS.init({
-    duration: 800,
-    once: true,
-    offset: 100
-});
-
-// Функция плавного скролла для всех ссылок с якорями
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
-});
-
-// Активация соответствующего пункта меню при скролле
-window.addEventListener('scroll', () => {
-    const sections = document.querySelectorAll('section, header');
-    const navLinks = document.querySelectorAll('.nav-link');
-    
-    let current = '';
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (pageYOffset >= sectionTop - 200) {
-            current = section.getAttribute('id');
-        }
-    });
-
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-            link.classList.add('active');
-        }
-    });
-});
-
-// Обработка изменения размера окна для адаптивности изображения
-window.addEventListener('resize', () => {
-    const heroImage = document.querySelector('.hero-image');
-    if (heroImage && window.innerWidth <= 700) {
-        heroImage.style.objectPosition = 'center';
-    }
-});
-
-// Cookie Popup JavaScript
 class CookiePopup {
     constructor() {
         this.cookiePopup = null;
         this.cookieModal = null;
         this.cookieConsent = null;
         this.acceptBtn = null;
-        this.declineBtn = null;
         this.closeBtn = null;
         this.modalCloseBtn = null;
         this.agreementLink = null;
+        this.backdrop = null;
+
         this.cookieName = 'user_cookie_consent';
         this.cookieExpiry = 365; // дней
-        
+
         this.init();
     }
-    
+
     init() {
         // Проверяем, есть ли уже согласие
         if (this.getCookie(this.cookieName)) {
             return;
         }
-        
-        // Создаем popup если его нет в DOM
+
+        // Создаем popup и backdrop, если их нет в DOM
         this.createPopup();
-        
+        this.createBackdrop();
+
         // Инициализируем элементы
         this.initElements();
-        
+
         // Привязываем события
         this.bindEvents();
-        
+
         // Показываем popup с задержкой
         setTimeout(() => {
             this.showPopup();
         }, 1000);
     }
-    
+
     createPopup() {
-        // Проверяем, есть ли уже popup в DOM
         if (document.getElementById('cookie-popup')) {
             return;
         }
-        
+
         const popupHTML = `
-            <div id="cookie-popup" class="cookie-popup">
+            <div id="cookie-popup" class="cookie-popup" role="dialog" aria-modal="true" aria-labelledby="cookie-popup-title">
                 <div class="cookie-content">
                     <div class="cookie-header">
-                        <h3>Уведомление о cookie-файлах</h3>
-                        <button id="cookie-close" class="cookie-close">&times;</button>
+                        <h3 id="cookie-popup-title">Уведомление о cookie-файлах</h3>
+                        <button id="cookie-close" class="cookie-close" aria-label="Закрыть уведомление">&times;</button>
                     </div>
                     <div class="cookie-body">
                         <p>Сайт использует Cookie-файлы для обеспечения всех его функций. Оставаясь на данном сайте, вы принимаете условия <a href="#" id="cookie-agreement-link">Соглашения об использовании Cookie-файлов</a>.</p>
                         <div class="cookie-checkbox">
-                            <input type="checkbox" id="cookie-consent" required>
+                            <input type="checkbox" id="cookie-consent" required aria-required="true">
                             <label for="cookie-consent">Я принимаю условия использования cookie-файлов</label>
                         </div>
                     </div>
                     <div class="cookie-footer">
                         <button id="cookie-accept" class="cookie-btn cookie-accept-btn" disabled>Принять</button>
-                        <button id="cookie-decline" class="cookie-btn cookie-decline-btn">Отклонить</button>
                     </div>
                 </div>
             </div>
-            
-            <div id="cookie-agreement-modal" class="cookie-modal">
+
+            <div id="cookie-agreement-modal" class="cookie-modal" role="dialog" aria-modal="true" aria-labelledby="cookie-agreement-title" aria-describedby="cookie-agreement-content">
                 <div class="cookie-modal-content">
                     <div class="cookie-modal-header">
-                        <h2>Соглашение об использовании Cookie-файлов</h2>
-                        <button id="modal-close" class="cookie-close">&times;</button>
+                        <h2 id="cookie-agreement-title">Соглашение об использовании Cookie-файлов</h2>
+                        <button id="modal-close" class="cookie-close" aria-label="Закрыть соглашение">&times;</button>
                     </div>
-                    <div class="cookie-modal-body">
-                        <p>Настоящее Соглашение определяет порядок использования cookie-файлов пользователями сайта, администратором которого является Гражданин РФ Зантимиров Т., зарегистрированный в качестве самозанятого, в соответствии с Федеральным законом от 27.11.2018 N 422-ФЗ (ред. от 29.11.2024) "О проведении эксперимента по установлению специального налогового режима "Налог на профессиональный доход" (далее — «Оператор»).</p>
+                    <div id="cookie-agreement-content" class="cookie-modal-body">
+                        <p>Настоящее Соглашение определяет порядок использования cookie-файлов пользователями сайта, администратором которого является  гражданин РФ Зантимиров Т.А. , зарегистрированная в качестве самозанятого, в соответствии с Федеральным законом от 27.11.2018 N 422-ФЗ (ред. от 29.11.2024) "О проведении эксперимента по установлению специального налогового режима "Налог на профессиональный доход" (далее — «Оператор»).</p>
                         
                         <h3>1. Общие положения</h3>
                         <p>1.1. Оператор использует cookie-файлы и аналогичные технологии (web-beacons, пиксели и пр.) для улучшения пользовательского опыта, персонализации контента и рекламы, а также для анализа трафика и функционирования Сайта.</p>
@@ -193,105 +118,109 @@ class CookiePopup {
                 </div>
             </div>
         `;
-        
+
         document.body.insertAdjacentHTML('beforeend', popupHTML);
     }
-    
+
+    createBackdrop() {
+        if (!document.querySelector('.cookie-backdrop')) {
+            const backdrop = document.createElement('div');
+            backdrop.className = 'cookie-backdrop';
+            document.body.appendChild(backdrop);
+        }
+    }
+
     initElements() {
         this.cookiePopup = document.getElementById('cookie-popup');
         this.cookieModal = document.getElementById('cookie-agreement-modal');
         this.cookieConsent = document.getElementById('cookie-consent');
         this.acceptBtn = document.getElementById('cookie-accept');
-        this.declineBtn = document.getElementById('cookie-decline');
         this.closeBtn = document.getElementById('cookie-close');
         this.modalCloseBtn = document.getElementById('modal-close');
         this.agreementLink = document.getElementById('cookie-agreement-link');
+        this.backdrop = document.querySelector('.cookie-backdrop');
     }
-    
+
     bindEvents() {
         // Обработчик чекбокса
         this.cookieConsent.addEventListener('change', () => {
             this.acceptBtn.disabled = !this.cookieConsent.checked;
         });
-        
-        // Обработчики кнопок
+
+        // Кнопка "Принять"
         this.acceptBtn.addEventListener('click', () => {
             this.acceptCookies();
         });
-        
-        this.declineBtn.addEventListener('click', () => {
-            this.declineCookies();
-        });
-        
+
+        // Кнопка закрытия уведомления (крестик)
         this.closeBtn.addEventListener('click', () => {
-            this.hidePopup();
+            // Не даём закрыть окно без согласия — можно убрать кнопку закрытия, если хотите
+            // Для безопасности пока просто игнорируем клик
+            // Или можно показать alert
+            alert('Для продолжения работы с сайтом необходимо принять условия использования cookie-файлов.');
         });
-        
-        // Обработчики модального окна
+
+        // Ссылка на соглашение — открываем модальное окно
         this.agreementLink.addEventListener('click', (e) => {
             e.preventDefault();
             this.showModal();
         });
-        
+
+        // Закрытие модального окна
         this.modalCloseBtn.addEventListener('click', () => {
             this.hideModal();
         });
-        
+
         // Закрытие модального окна по клику на фон
         this.cookieModal.addEventListener('click', (e) => {
             if (e.target === this.cookieModal) {
                 this.hideModal();
             }
         });
-        
-        // Закрытие по ESC
+
+        // Закрытие модального окна по ESC
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 this.hideModal();
             }
         });
     }
-    
+
     showPopup() {
         this.cookiePopup.classList.add('show');
+        this.backdrop.classList.add('show');
+        document.body.classList.add('cookie-lock'); // блокируем прокрутку и клики по сайту
     }
-    
+
     hidePopup() {
         this.cookiePopup.classList.remove('show');
-        setTimeout(() => {
-            this.cookiePopup.style.display = 'none';
-        }, 300);
+        this.backdrop.classList.remove('show');
+        document.body.classList.remove('cookie-lock');
     }
-    
+
     showModal() {
         this.cookieModal.classList.add('show');
         document.body.style.overflow = 'hidden';
     }
-    
+
     hideModal() {
         this.cookieModal.classList.remove('show');
         document.body.style.overflow = 'auto';
     }
-    
+
     acceptCookies() {
         this.setCookie(this.cookieName, 'accepted', this.cookieExpiry);
         this.hidePopup();
         console.log('Cookies accepted');
     }
-    
-    declineCookies() {
-        this.setCookie(this.cookieName, 'declined', this.cookieExpiry);
-        this.hidePopup();
-        console.log('Cookies declined');
-    }
-    
+
     setCookie(name, value, days) {
         const date = new Date();
         date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
         const expires = "expires=" + date.toUTCString();
         document.cookie = name + "=" + value + ";" + expires + ";path=/";
     }
-    
+
     getCookie(name) {
         const nameEQ = name + "=";
         const ca = document.cookie.split(';');
@@ -305,16 +234,15 @@ class CookiePopup {
 }
 
 // Инициализация cookie popup после загрузки DOM
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     new CookiePopup();
 });
 
 // Альтернативный способ инициализации, если DOM уже загружен
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         new CookiePopup();
     });
 } else {
     new CookiePopup();
 }
-

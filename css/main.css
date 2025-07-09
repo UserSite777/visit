@@ -741,3 +741,27 @@ body {
     }
 }
 
+/* Блокировка страницы, пока не принято соглашение */
+body.cookie-lock {
+    overflow: hidden;
+    pointer-events: none;   /* блокируем клики по всему содержимому */
+}
+
+body.cookie-lock #cookie-popup,
+body.cookie-lock #cookie-agreement-modal {
+    pointer-events: auto;   /* клики разрешены только в окне уведомления */
+}
+
+/* Необязательный затемняющий фон */
+.cookie-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.4);
+    z-index: 9999;
+    display: none;
+}
+
+.cookie-backdrop.show {
+    display: block;
+}
+
