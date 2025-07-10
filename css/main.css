@@ -485,3 +485,60 @@ body {
   z-index: 10000;
   box-sizing: border-box;
 }
+
+
+/* Для небольших экранов (например, мобильные телефоны) */
+@media (max-width: 600px) {
+  #cookie-banner {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .cookie-banner__content {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cookie-banner__content p {
+    margin-bottom: 10px;
+  }
+
+  #cookie-accept {
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+
+/* Для средних экранов (планшеты) */
+@media (min-width: 601px) and (max-width: 1024px) {
+  #cookie-banner {
+    font-size: 16px;
+    padding: 15px;
+  }
+
+  .cookie-banner__content {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  #cookie-accept {
+    width: auto;
+  }
+}
+
+/* Для больших экранов (настольные компьютеры) */
+@media (min-width: 1025px) {
+  #cookie-banner {
+    font-size: 18px;
+    padding: 20px;
+  }
+
+  .cookie-banner__content {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  #cookie-accept {
+    width: auto;
+  }
+}
