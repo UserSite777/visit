@@ -469,35 +469,39 @@ body {
 
 
 /* Стили для центрирования окна согласия куки */
+/* Центрируем окно по центру экрана */
 .cookie-banner {
   position: fixed;
-  bottom: 20px; /* отступ от низа */
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  max-width: 600px;
-  width: calc(100% - 40px); /* отступы слева и справа по 20px */
-  z-index: 9999;
+  transform: translate(-50%, -50%);
+  
+  max-width: 320px; /* компактная ширина */
+  width: auto;      /* ширина по содержимому */
+  
+  padding: 15px 20px;
   background-color: #fff;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+  border: 2px solid #fda300; /* яркая рамка */
   border-radius: 8px;
-  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  
+  font-family: inherit;
+  z-index: 10000;
   box-sizing: border-box;
+  text-align: center;
 }
 
-.cookie-banner__content {
-  text-align: center;
-  word-wrap: break-word; /* перенос слов */
+/* Текст внутри окна */
+.cookie-banner p {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #333;
+  word-wrap: break-word;
   overflow-wrap: break-word;
 }
 
-.cookie-banner p {
-  margin: 0 0 15px 0;
-  font-size: 14px;
-  line-height: 1.5;
-  color: #333;
-}
-
-/* Ссылка с жёлтым цветом */
+/* Ссылка желтого цвета */
 .cookie-link-yellow {
   color: #fda300;
   text-decoration: underline;
@@ -509,34 +513,36 @@ body {
   outline: none;
 }
 
-/* Стили для чекбокса */
+/* Чекбокс с подписью */
 .cookie-banner__checkbox {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  margin-bottom: 15px;
+  justify-content: center;
+  gap: 6px;
+  font-size: 13px;
+  margin-bottom: 12px;
   cursor: pointer;
   user-select: none;
 }
 
 .cookie-banner__checkbox input[type=checkbox] {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   cursor: pointer;
 }
 
-/* Кнопка принять */
+/* Кнопка принять — маленькая */
 #cookie-accept {
-  padding: 10px 24px;
-  border-radius: 5px;
-  background-color: #fda300;
-  color: white;
+  padding: 6px 16px;
+  min-width: 100px;
+  font-size: 13px;
   font-weight: 600;
+  border-radius: 6px;
   border: none;
+  background-color: #fda300;
+  color: #fff;
   cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
-  min-width: 120px;
+  transition: background-color 0.3s ease;
 }
 
 #cookie-accept:disabled {
@@ -548,15 +554,16 @@ body {
   background-color: #e89300;
 }
 
-/* Адаптив для очень узких экранов */
-@media (max-width: 400px) {
+/* Адаптив для очень маленьких экранов */
+@media (max-width: 360px) {
   .cookie-banner {
-    width: calc(100% - 20px);
-    bottom: 10px;
-    padding: 15px;
+    max-width: 280px;
+    padding: 12px 16px;
   }
-
+  
   #cookie-accept {
-    width: 100%;
+    min-width: 90px;
+    padding: 6px 12px;
+    font-size: 12px;
   }
 }
