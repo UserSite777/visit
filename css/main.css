@@ -468,77 +468,55 @@ body {
 
 
 
-/* Простое решение без медиа-запросов */
+/* Стили для центрирования окна согласия куки */
 .cookie-banner {
   position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  max-width: min(420px, calc(100vw - 40px)); /* Учитываем отступы */
-  width: 90%;
-  background: #fff;
-  border: 2px solid #fda300;
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0,0,0,.2);
-  padding: 20px 24px;
-  font-family: inherit;
-  z-index: 10000;
-  box-sizing: border-box;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background-color: #fff;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
 }
 
-
-/* Для небольших экранов (например, мобильные телефоны) */
-@media (max-width: 600px) {
-  #cookie-banner {
-    font-size: 14px;
-    padding: 10px;
-  }
-
-  .cookie-banner__content {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .cookie-banner__content p {
-    margin-bottom: 10px;
-  }
-
-  #cookie-accept {
-    width: 100%;
-    margin-top: 10px;
-  }
+.cookie-banner__content {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  text-align: center;
 }
 
-/* Для средних экранов (планшеты) */
-@media (min-width: 601px) and (max-width: 1024px) {
-  #cookie-banner {
-    font-size: 16px;
-    padding: 15px;
-  }
-
-  .cookie-banner__content {
-    flex-direction: row;
-    justify-content: space-between;
-  }
-
-  #cookie-accept {
-    width: auto;
-  }
+.cookie-banner a {
+  color: #007bff;
+  text-decoration: underline;
 }
 
-/* Для больших экранов (настольные компьютеры) */
-@media (min-width: 1025px) {
-  #cookie-banner {
-    font-size: 18px;
-    padding: 20px;
-  }
+.cookie-banner__checkbox input[type=checkbox] {
+  display: none;
+}
 
-  .cookie-banner__content {
-    flex-direction: row;
-    justify-content: space-between;
-  }
+.cookie-banner__checkbox span {
+  cursor: pointer;
+  user-select: none;
+}
 
-  #cookie-accept {
-    width: auto;
-  }
+.cookie-banner__checkbox input[type=checkbox]:checked + span::before {
+  content: '✓';
+  font-size: 1rem;
+  margin-right: 5px;
+}
+
+#cookie-accept {
+  margin-top: 10px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+#cookie-accept:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
