@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Подземелья и сокровища • Игровой демо-текстовый квест</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #2c1810 0%, #1a0f0a 100%);
+      color: #f4e4c1;
+      min-height: 100vh;
+      padding: 0;
+      line-height: 1.6;
+    }
+    .quest-container {
+      max-width: 900px;
+      margin: 40px auto 0 auto;
+      background: rgba(0,0,0,0.85);
+      border-radius: 15px;
+      padding: 28px 22px 32px 22px;
+      box-shadow: 0 10px 32px rgba(0,0,0,0.7);
+      border: 2px solid #8b4513;
+    }
+    h1 {
+      text-align: center;
+      color: #ffd700;
+      text-shadow: 2px 2px 4px #000;
+      font-family: 'Cinzel', serif;
+      margin-bottom: 28px;
+      font-size: 2.2em;
+    }
+    .player-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+      padding: 15px;
+      background: rgba(139,69,19, 0.25);
+      border-radius: 10px;
+      border: 1px solid #8b4513;
+    }
+    .stat-item {
+      background: rgba(0,0,0,0.6);
+      padding: 8px 0;
+      border-radius: 8px;
+      text-align: center;
+      border: 1px solid #654321;
+    }
+    .stat-name {
+      font-weight: bold;
+      color: #ffd700;
+      font-size: 1em;
+    }
+    .stat-value {
+      font-size: 1.2em;
+      margin-top: 3px;
+      color: #fff;
+    }
+    .story-text {
+      background: rgba(0,0,0,0.6);
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 22px;
+      border: 1px solid #8b4513;
+      font-size: 1.08em;
+    }
+    .choices-container {
+      display: grid;
+      gap: 14px;
+      margin-bottom: 30px;
+    }
+    .choice-button {
+      background: linear-gradient(135deg, #8b4513, #a0522d);
+      border: none;
+      color: white;
+      padding: 13px 18px;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: left;
+      border: 2px solid #654321;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    }
+    .choice-button:hover {
+      background: linear-gradient(135deg, #a0522d, #cd853f);
+      transform: translateY(-1px) scale(1.03);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.22);
+      border-color: #ffd700;
+    }
+    .choice-button:disabled {
+      background: #555;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+    footer {
+      background: linear-gradient(to right, #22130e, #493017 70%);
+      padding: 1.1rem 1rem;
+      text-align: center;
+      margin-top: 40px;
+      border-top: 2px solid #8b4513;
+      font-size: 0.97rem;
+      color: #bba984;
+      border-radius: 0 0 16px 16px;
+    }
+    .download-link {
+      display: inline-block;
+      background: #ffd700;
+      color: #421c00;
+      font-weight: bold;
+      padding: 11px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      margin-top: 1.7em;
+      font-size: 1.05em;
+      border: 2px solid #8b4513;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.16);
+      transition: background .16s, color .16s;
+    }
+    .download-link:hover {
+      background: #fffbe1;
+      color: #7e4000;
+      border-color: #ffd700;
+    }
+    @media (max-width: 600px) {
+      .quest-container { padding: 13px 3vw 22px 3vw; }
+      h1 { font-size: 1.35em; }
+      .player-stats { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="quest-container">
+    <h1>Текстовый квест: Подземелья и сокровища</h1>
+    <!-- Статы персонажа -->
+    <div class="player-stats" id="player-stats">
+      <div class="stat-item"><div class="stat-name">Сила</div><div class="stat-value" id="stat-power">3</div></div>
+      <div class="stat-item"><div class="stat-name">Разум</div><div class="stat-value" id="stat-mind">3</div></div>
+      <div class="stat-item"><div class="stat-name">Удача</div><div class="stat-value" id="stat-luck">3</div></div>
+      <div class="stat-item"><div class="stat-name">Уровень</div><div class="stat-value" id="stat-level">1</div></div>
+      <div class="stat-item"><div class="stat-name">Здоровье</div><div class="stat-value" id="stat-hp">100</div></div>
+      <div class="stat-item"><div class="stat-name">Инвентарь</div><div class="stat-value" id="stat-inventory">Пусто</div></div>
+    </div>
+    <!-- Игровой текст -->
+    <div class="story-text" id="story-text">
+      <strong>Добро пожаловать!</strong><br>
+      Пройдите квест, используйте свои навыки и удачу, чтобы выжить и найти артефакт. Ваши решения повлияют на историю.<br>
+      <em>Начните свое приключение — выберите путь ниже.</em>
+    </div>
+    <!-- Кнопки выбора -->
+    <div class="choices-container" id="choices-container">
+      <!-- Будут генерироваться скриптом -->
+    </div>
+    <!-- Сообщения -->
+    <div id="message-area"></div>
+  </div>
+
+  <footer>
+    © 2025 Квест "Подземелья и сокровища" | <a href="index.html" style="color:#ffd700;">Вернуться на главную</a>
+    <br>
+    <a class="download-link" href="https://disk.yandex.ru/d/1TM12-qle-RJyw" target="_blank" rel="noopener">Скачать APK игры</a>
+  </footer>
+
+  <script>
+    // Краткая игровая механика, почти как в приложении (упрощённо)
+    const player = {
+      power: 3, mind: 3, luck: 3,
+      level: 1, hp: 100, inventory: []
+    };
+
+    const story = {
+      intro: {
+        text: `<h2>Пролог: Пограничье древних земель</h2>
+          <p>В воздухе густой туман. Давние легенды ведут к великанским руинам. 
+          Перед вами развилка трех дорог — за мощью, знанием или случаем?</p>`,
+        choices: [
+          { txt: "Север: Башня мудрости (1 Разум)", cost: { mind: 1 }, next: "tower", fail: "fail_mind" },
+          { txt: "Восток: Гора силы (1 Сила)", cost: { power: 1 }, next: "forge", fail: "fail_power" },
+          { txt: "Запад: Лес случая (1 Удача)", cost: { luck: 1 }, next: "forest", fail: "fail_luck" }
+        ]
+      },
+      fail_mind: {
+        text: `<p>Недостаточно разума, путь к Башне закрыт.</p>`,
+        choices: [
+          { txt: "Гора силы", cost: { power: 1 }, next: "forge", fail: "fail_power" },
+          { txt: "Лес случая", cost: { luck: 1 }, next: "forest", fail: "fail_luck" }
+        ]
+      },
+      fail_power: {
+        text: `<p>Слабы для подъема на Гору силы.</p>`,
+        choices: [
+          { txt: "Башня мудрости", cost: { mind: 1 }, next: "tower", fail: "fail_mind" },
+          { txt: "Лес случая", cost: { luck: 1 }, next: "forest", fail: "fail_luck" }
+        ]
+      },
+      fail_luck: {
+        text: `<p>Дорога в лес слишком опасна без удачи.</p>`,
+        choices: [
+          { txt: "Башня мудрости", cost: { mind: 1 }, next: "tower", fail: "fail_mind" },
+          { txt: "Гора силы", cost: { power: 1 }, next: "forge", fail: "fail_power" }
+        ]
+      },
+      tower: {
+        text: `<h3>Башня мудрости</h3>
+          <p>Внутри встречаете загадку: "Что становится сильнее, когда ею делятся?"</p>`,
+        choices: [
+          { txt: "Ответ: знание (1 Разум)", cost: { mind: 1 }, effect: { mind: 1, item: "Книга заклинаний" }, next: "victory" },
+          { txt: "Попытаться силой (1 Сила)", cost: { power: 1 }, fail: "fail_power" }
+        ]
+      },
+      forge: {
+        text: `<h3>Гора силы</h3>
+          <p>Вас встречают стальные ворота кузницы, их нужно открыть.</p>`,
+        choices: [
+          { txt: "Открыть с помощью силы (1 Сила)", cost: { power: 1 }, effect: { power: 1, item: "Стальной меч" }, next: "victory" },
+          { txt: "Повернуть назад", cost: {}, next: "intro" }
+        ]
+      },
+      forest: {
+        text: `<h3>Лес случая</h3>
+          <p>Дремучие деревья шепчут, что удача — все...</p>`,
+        choices: [
+          { txt: "Найти скрытый путь (1 Удача)", cost: { luck: 1 }, effect: { luck: 1, item: "Камень фортуны" }, next: "victory" },
+          { txt: "Повернуть назад", cost: {}, next: "intro" }
+        ]
+      },
+      victory: {
+        text: `<h2>Успех!</h2>
+          <p>Вы прошли испытания. Возвращайтесь к началу, чтобы попробовать другой путь.</p>`,
+        choices: [
+          { txt: "Пройти снова", cost: {}, next: "intro" }
+        ]
+      }
+    };
+
+    function updateStats() {
+      document.getElementById('stat-power').textContent = player.power;
+      document.getElementById('stat-mind').textContent = player.mind;
+      document.getElementById('stat-luck').textContent = player.luck;
+      document.getElementById('stat-level').textContent = player.level;
+      document.getElementById('stat-hp').textContent = player.hp;
+      document.getElementById('stat-inventory').textContent = player.inventory.length ? player.inventory.join(', ') : "Пусто";
+    }
+
+    function render(scene = "intro") {
+      const s = story[scene];
+      document.getElementById('story-text').innerHTML = s.text;
+      const container = document.getElementById('choices-container');
+      container.innerHTML = '';
+      s.choices.forEach(choice => {
+        const btn = document.createElement('button');
+        btn.className = 'choice-button';
+        btn.innerText = choice.txt;
+        // Проверка ресурсов
+        let can = true, failScene = choice.fail;
+        if (choice.cost) {
+          if ('power' in choice.cost && player.power < choice.cost.power) can = false;
+          if ('mind' in choice.cost && player.mind < choice.cost.mind) can = false;
+          if ('luck' in choice.cost && player.luck < choice.cost.luck) can = false;
+        }
+        btn.disabled = !can;
+        btn.onclick = function() {
+          if (!can && failScene) return render(failScene);
+          // Применяем траты
+          if (choice.cost) {
+            if (choice.cost.power) player.power -= choice.cost.power;
+            if (choice.cost.mind) player.mind -= choice.cost.mind;
+            if (choice.cost.luck) player.luck -= choice.cost.luck;
+          }
+          // Эффекты
+          if (choice.effect) {
+            if (choice.effect.power) player.power += choice.effect.power;
+            if (choice.effect.mind) player.mind += choice.effect.mind;
+            if (choice.effect.luck) player.luck += choice.effect.luck;
+            if (choice.effect.item) player.inventory.push(choice.effect.item);
+          }
+          updateStats();
+          render(choice.next);
+        };
+        container.appendChild(btn);
+      });
+      updateStats();
+    }
+    // Стартуем
+    render();
+  </script>
+</body>
+</html>
