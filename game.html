@@ -349,33 +349,57 @@
             height: 24px;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .game-hero h1 {
-                font-size: 2rem;
-            }
-            
-            .container {
-                padding: 0 1rem;
-            }
-            
-            .feature-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .telegram-content {
-                flex-direction: column;
-            }
-
-            .telegram-info {
-                text-align: center;
-            }
+    /* Responsive */
+    @media (max-width: 768px) {
+        .game-hero h1 {
+            font-size: 2rem;
         }
+
+        .container {
+            padding: 0 1rem;
+        }
+
+        .feature-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .footer-content {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .telegram-section {
+            padding: 1.5rem;
+        }
+
+        .telegram-content {
+            flex-direction: column;
+            align-items: center; /* Центрируем элементы по поперечной оси */
+        }
+
+        .telegram-image {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        .telegram-info {
+            text-align: center;
+            width: 100%;
+        }
+
+        /* Исправляем выравнивание списка */
+        .telegram-info ul {
+            text-align: center !important;
+            padding-left: 0 !important;
+        }
+
+        .telegram-link {
+            width: 100%;
+            max-width: 300px;
+        }
+    }
     </style>
 </head>
 
@@ -458,7 +482,7 @@
                             <li>🎮 Анонсы новых игровых механик</li>
                         </ul>
                         
-                        <a href="https://t.me/+EQyoJrFcqjQ4MWMy" class="telegram-link" target="_blank" rel="noopener">
+                        <a href="https://t.me/treasure9game" class="telegram-link" target="_blank" rel="noopener">
                             <span class="telegram-icon">📱</span>
                             Подписаться на канал
                         </a>
