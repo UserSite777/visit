@@ -247,6 +247,7 @@
             color: #333333;
             font-size: 2rem;
             margin-bottom: 1.5rem;
+            text-align: center;
         }
 
         .telegram-content {
@@ -437,31 +438,6 @@
                     </div>
                 </div>
 
-                <div class="code-block">
-@Composable
-fun GameScreen() {
-    val webViewState = rememberWebViewState(url = "file:///android_asset/game.html")
-    
-    Column(modifier = Modifier.fillMaxSize()) {
-        WebView(
-            state = webViewState,
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth(),
-            onCreated = { webView ->
-                webView.settings.javaScriptEnabled = true
-                webView.addJavascriptInterface(GameBridge(), "Android")
-            }
-        )
-        
-        GameControls(
-            onSaveProgress = { 
-                webViewState.evaluateJavascript("saveGameState()") 
-            }
-        )
-    }
-}
-                </div>
             </section>
 
             <!-- Telegram Channel Section -->
@@ -530,7 +506,7 @@ fun GameScreen() {
                 © 2025 ИИ-Программист • Современная разработка на Kotlin & Compose
             </div>
             <a href="https://www.rustore.ru/catalog/app/com.example.dungeonsandtreasure" target="_blank" rel="noopener noreferrer" aria-label="RuStore">
-                <img src="./img/game/Rustor_logo.svg" alt="RuStore Logo" 
+                <img src="./img/game/RuStore_Icon.png" alt="RuStore Logo" 
                     style="height: 4rem; width: auto; max-width: 100%;">
             </a>
         </div>
